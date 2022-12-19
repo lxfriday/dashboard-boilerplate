@@ -1,0 +1,45 @@
+.wrapper {
+  padding: 14px 24px;
+  background-color: #fff;
+  transition: box-shadow 0.5s ease;
+  &:hover {
+    box-shadow: 0 0 16px #aaa;
+  }
+  .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #aaa;
+    span {
+      font-size: 14px;
+    }
+    .notiIcon {
+      cursor: pointer;
+    }
+  }
+  .sales {
+    font-size: 32px;
+    color: #000;
+  }
+  .compareWrapper {
+    display: flex;
+    justify-items: flex-start;
+    align-items: center;
+    height: 46px;
+    .weeklyCompare {
+    }
+    .dailyCompare {
+      margin-left: 16px;
+    }
+    .green {
+      color: green;
+    }
+    .red {
+      color: red;
+    }
+  }
+  .bottomWrapper {
+    padding-top: 6px;
+    border-top: 1px solid #eee;
+  }
+}

@@ -9,11 +9,9 @@ import reportWebVitals from './reportWebVitals'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <React.StrictMode>
-      <BrowserRouter>
-        <Router />
-      </BrowserRouter>
-    </React.StrictMode>
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
   </Provider>
 )
 
