@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { call, put } from 'redux-saga/effects'
+import { createSlice } from '@reduxjs/toolkit'
 import { getDashboardData } from '@/Services'
-import { store } from './index'
 
 const initialState = {
   loading: true,
@@ -27,34 +27,31 @@ const initialState = {
   },
 }
 
-export const fetchDashboardInfoAction = createAsyncThunk(
-  'dashboard/fetchDashboardInfo',
-  async () => {
-    return await getDashboardData()
+export function* fetchDashboardInfo() {
+  try {
+    const data = yield call(getDashboardData)
+    yield put({ type: 'dashboard/fetchDashboardInfoReducer', payload: data })
+  } catch (e) {
+    yield put({ type: 'dashboard/setLoading', loading: false })
   }
-)
+}
+
 
 export const counterSlice = createSlice({
   name: 'dashboard',
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchDashboardInfoAction.pending, (state, { payload }) => {
-        state.loading = true
-      })
-      .addCase(fetchDashboardInfoAction.fulfilled, (state, { payload }) => {
-        state.loading = false
-        state.salesData = payload.salesData
-        state.visitorsData = payload.visitorsData
-        state.paymentsData = payload.paymentsData
-        state.businessData = payload.businessData
-        console.log('fulfilled');
-      })
-      .addCase(fetchDashboardInfoAction.rejected, (state, { payload }) => {
-        console.log('rejected');
-        state.loading = false
-      })
+  reducers: {
+    fetchDashboardInfoReducer(state, { payload }) {
+      state.salesData = payload.salesData
+      state.visitorsData = payload.visitorsData
+      state.paymentsData = payload.paymentsData
+      state.businessData = payload.businessData
+      state.loading = false
+    },
+    setLoading(state, { loading }) {
+      console.log('loading', loading)
+      state.loading = loading
+    },
   },
 })
 

@@ -34,6 +34,14 @@ const proxy = {
       },
     })
   },
+  'GET /api/userInfo': (req, res) => {
+    return res.status(200).json({
+      uid: 10086,
+      name: 'lxfriday',
+      sex: 'male',
+      authority: 0,
+    })
+  },
 }
 
 module.exports = proxy

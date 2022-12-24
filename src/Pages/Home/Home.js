@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Skeleton } from 'antd'
 
 import styles from './Home.module.less'
 import SalesCard from './Components/SalesCard'
@@ -10,21 +9,21 @@ import BusinessCard from './Components/BusinessCard'
 import WordCloudCard from './Components/WordCloudCard'
 import Loading from '@/Components/Loading'
 
-import { fetchDashboardInfoAction } from '@/store/dashboard'
-
 export default function Home() {
   const dashboardData = useSelector((state) => state.dashboard)
+  const appData = useSelector((state) => state.app)
   const { salesData, visitorsData, paymentsData, businessData, loading } =
     dashboardData
+  const { userInfo } = appData
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchDashboardInfoAction())
+    dispatch({
+      type: 'dashboard/fetchDashboardInfoEffect',
+    })
   }, [])
   if (loading) {
-    return (
-      <Loading />
-    )
+    return <Loading />
   } else {
     return (
       <div className={styles.wrapper}>
@@ -35,6 +34,17 @@ export default function Home() {
           <BusinessCard data={businessData} />
         </div>
         <WordCloudCard />
+        <div>
+          <button
+            onClick={() =>
+              dispatch({
+                type: 'app/fetchUserInfoEffect',
+              })
+            }>
+            fetch userInfo
+          </button>
+          <div>{JSON.stringify(userInfo)}</div>
+        </div>
       </div>
     )
   }
